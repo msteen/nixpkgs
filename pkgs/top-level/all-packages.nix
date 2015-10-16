@@ -10106,6 +10106,8 @@ let
 
   mingetty = callPackage ../os-specific/linux/mingetty { };
 
+  mkinitcpio-nfs-utils = callPackage ../os-specific/linux/mkinitcpio-nfs-utils { };
+
   module_init_tools = callPackage ../os-specific/linux/module-init-tools { };
 
   aggregateModules = modules:
