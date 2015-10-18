@@ -447,6 +447,8 @@ in
 
         cat > $out/bin/openssl-wrap <<EOF
         #!$out/bin/sh
+        export OPENSSL_CONF=$out/etc/ssl/openssl.cnf
+        $out/bin/openssl "\$@"
         EOF
         chmod +x $out/bin/openssl-wrap
       ''}
@@ -457,11 +459,6 @@ in
       ${optionalString luks.yubikeySupport ''
         $out/bin/ykchalresp -V
         $out/bin/ykinfo -V
-        cat > $out/bin/openssl-wrap <<EOF
-        #!$out/bin/sh
-        export OPENSSL_CONF=$out/etc/ssl/openssl.cnf
-        $out/bin/openssl "\$@"
-        EOF
         $out/bin/openssl-wrap version
       ''}
     '';
