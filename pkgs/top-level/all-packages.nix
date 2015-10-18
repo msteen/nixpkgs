@@ -11736,6 +11736,8 @@ let
     inherit (gnome) GConf;
   };
 
+  google-chrome = callPackage ../applications/networking/browsers/google-chrome { gconf = gnome.GConf; };
+
   googleearth = callPackage_i686 ../applications/misc/googleearth { };
 
   google_talk_plugin = callPackage ../applications/networking/browsers/mozilla-plugins/google-talk-plugin {
