@@ -36,7 +36,7 @@ let
           ${optionalString (header != null) "--header=${header}"} \
           ${optionalString (keyFile != null) "--key-file=${keyFile} ${optionalString (keyFileSize != null) "--keyfile-size=${toString keyFileSize}"}"} \
           > /.luksopen_args
-        cryptsetup-askpass
+        cryptsetup $(cat /.luksopen_args)
         rm /.luksopen_args
     }
 
