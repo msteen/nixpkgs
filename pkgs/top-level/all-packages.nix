@@ -3699,6 +3699,8 @@ let
 
   zsh = callPackage ../shells/zsh { };
 
+  grml-zsh-config = callPackage ../shells/grml-zsh-config { };
+
 
   ### DEVELOPMENT / COMPILERS
 
