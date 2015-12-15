@@ -177,6 +177,22 @@ rec {
       else
         s;
 
+  # Removes trailing whitespace
+  chomp = str:
+    let
+      recur = len:
+        if len == 0 then
+          0
+        else
+          let
+            c = substring (len - 1) 1 str;
+          in if c == " " || c == "\t" || c == "\r" || c == "\n" then
+            recur (len - 1)
+          else
+            len;
+    in substring 0 (recur (stringLength str)) str;
+
+
   # Return true iff string v1 denotes a version older than v2.
   versionOlder = v1: v2: builtins.compareVersions v2 v1 == 1;
 
