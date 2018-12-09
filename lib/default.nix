@@ -7,6 +7,11 @@ let
 
   inherit (import ./fixed-points.nix {}) makeExtensible;
 
+  # Allow extending lib by specifying an overlay file.
+  finalLib = if builtins.any ({ prefix, ... }: prefix == "lib-overlay") builtins.nixPath
+    then lib.fix (lib.extends (import <lib-overlay>) (self: lib))
+    else lib;
+
   lib = makeExtensible (self: let
     callLibs = file: import file { lib = self; };
   in with self; {
@@ -29,7 +34,7 @@ let
     versions = callLibs ./versions.nix;
 
     # module system
-    modules = callLibs ./modules.nix;
+    modules = import ./modules.nix  { lib = self; inherit finalLib; }; # module arguments need the final lib
     options = callLibs ./options.nix;
     types = callLibs ./types.nix;
 
@@ -135,4 +140,4 @@ let
       mergeAttrsByFuncDefaultsClean mergeAttrBy prepareDerivationArgs
       nixType imap overridableDelayableArgs;
   });
-in lib
+in finalLib

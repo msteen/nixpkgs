@@ -1,4 +1,4 @@
-{ lib }:
+{ lib, finalLib }:
 
 with lib.lists;
 with lib.strings;
@@ -25,9 +25,9 @@ rec {
                   # there's _module.args. If specialArgs.modulesPath is defined it will be
                   # used as the base path for disabledModules.
                   specialArgs ? {}
-                , # This would be remove in the future, Prefer _module.args option instead.
+                , # This will be removed in the future, Prefer _module.args option instead.
                   args ? {}
-                , # This would be remove in the future, Prefer _module.check option instead.
+                , # This will be removed in the future, Prefer _module.check option instead.
                   check ? true
                 }:
     let
@@ -59,7 +59,7 @@ rec {
         };
       };
 
-      closed = closeModules (modules ++ [ internalModule ]) ({ inherit config options lib; } // specialArgs);
+      closed = closeModules (modules ++ [ internalModule ]) ({ inherit config options; lib = finalLib; } // specialArgs);
 
       options = mergeModules prefix (reverseList (filterModules (specialArgs.modulesPath or "") closed));
 
